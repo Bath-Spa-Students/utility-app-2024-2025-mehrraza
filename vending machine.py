@@ -38,13 +38,13 @@ dict_Vendmac={
 def display_dict_Vendmac(category=None):
     Vendmac_table_data = []
     if category:
-        items = dict_Vendmac_menu.get(category, {})
+        items = dict_Vendmac.get(category, {})
         for code, item in items.items():
             stocksta = f"{item['Stock']}" if item['Stock'] > 0 else "Out of stock"
             Vendmac_table_data.append([code, item["Name"], f"${item['Price $']:.2f}", stocksta])
         return tabulate(Vendmac_table_data, headers=["Code", "Item", "Price", "Stock"], tablefmt="pretty")
     else:
-        categories = list(dict_Vendmac_menu.keys())
+        categories = list(dict_Vendmac.keys())
         Vendmac_table_data = [[i + 1, cat] for i, cat in enumerate(categories)]
         return tabulate(Vendmac_table_data, headers=["Code", "Category"], tablefmt="pretty")
 
@@ -52,10 +52,10 @@ def display_dict_Vendmac(category=None):
 if _name_ == "_main_":
     print("Welcome to the Vending Machine!")
     total_cost = 0
-    categories = list(dict_Vendmac_menu.keys())
+    categories = list(dict_Vendmac.keys())
     while True:
         print("\nCategories ")
-        print(display_dict_Vendmac_menu())
+        print(display_dict_Vendmac())
         category_code = input("Choose a code (or type 'done' to finish): ").strip()
         if category_code.lower() == "done":
             break
@@ -66,12 +66,12 @@ if _name_ == "_main_":
 
         category = categories[int(category_code) - 1]
         print(f"\n--- {category} Menu ---")
-        print(display_dict_Vendingmachine_menu(category))
+        print(display_dict_Vendmac(category))
         code = input("Enter the code of the item that you want to purchase (or type 'go back' to go to the categories): ").strip().upper()
         if code.lower() == "back":
             continue
 
-        item = dict_Vendingmachine_menu[category].get(code)
+        item = dict_Vendmac[category].get(code)
         if not item:
             print("The code is incorrect!. Please try again.")
             continue
@@ -98,5 +98,3 @@ if _name_ == "_main_":
         print("No items purchased.Thank you.")
 
     print("Thank you for visiting my Vending Machine")
-
- 
